@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     var isTyping = false
     var clickedMathSign: Button?
     var triggerCaculateAfterMathSignPressed = false
+    var isEqualPressed = false
+    
     var width: CGFloat {
         return self.view.frame.size.width
     }
@@ -24,7 +26,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
-    
     
     @IBAction func numberPressed(_ sender: Button) {
         let digit = sender.currentTitle
@@ -37,6 +38,12 @@ class ViewController: UIViewController {
             display.text = addedNumber
         } else {
             display.text = digit
+        }
+        
+        if isEqualPressed {
+            model.result = 0.0
+            model.inputMathSign = ""
+            isEqualPressed = false
         }
         
         model.inputNumber = Double(display.text!)!
@@ -91,6 +98,9 @@ class ViewController: UIViewController {
         guard display.text != nil else {
             return
         }
+        
+        isEqualPressed = true
+        
         sender.hightlightButton()
         unhighlightMathSignButton(button: sender)
         isTyping = false
